@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+{% block title %} Home{% endblock title %}
+{% block body %}
+<br>
+
+<div style="margin-left: 30px; margin-right: 20px;">
+<div style="display: flex;">
+    <div class="col-5">
+    <h3><strong>{{course}} </strong></h3>
+    <h6>Feedback Page &nbsp; <img src="/static/images/star.png" alt="" width="15px"><img src="/static/images/star.png" alt="" width="15px"><img src="/static/images/star.png" alt="" width="15px"><img src="/static/images/star.png" alt="" width="15px"></h6>
+    </div> 
+    <div style="margin-right: 10px;">
+        <img src="/static/images/user.png" alt="" width="50px">
+    </div>
+    <div class="col-6">
+        <form class="d-flex" role="search">
+            <div class="form-floating">
+                <textarea style="resize: vertical; width: 350px;" class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                <label for="floatingTextarea"><small>Give your Feedback</small></label>
+              </div>
+              
+                    <div style="display: flex;">
+                    <div class="star">
+                        <input type="radio" id="five" name="rate" value="5">
+                        <label for="five"></label>
+                        <input type="radio" id="four" name="rate" value="4">
+                        <label for="four"></label>
+                        <input type="radio" id="three" name="rate" value="3">
+                        <label for="three"></label>
+                        <input type="radio" id="two" name="rate" value="2">
+                        <label for="two"></label>
+                        <input type="radio" id="one" name="rate" value="1">
+                        <label for="one"></label>
+                    </div>
+                    </div>
+            <button class="btn btn-warning" type="submit"  style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; height: 35px; margin-top: 10px; margin-left: 10px;"><strong>Add feedback</strong></button>
+          </form>
+    </div>
+</div>
+<br>
+<div style="display: flex; margin-left: 50px; margin-right: 50px;">
+    <div class="card" style="width: 28rem; margin-right: 30px;  border-radius: 15px; border-color: #ffdd47; border-width: 3px;">
+        <div class="card-body">
+          <h6 class="card-title"><img src="/static/images/user.png" alt="" width="50px"> <strong>UserName</strong> 
+            &nbsp;
+                <a class="dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="/static/images/more.png" alt="" width="25">
+                </a>
+                <ul class="dropdown-menu">
+                  <li><button class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#feedbackedit" title="feedbackedit"> <img src="/static/images/edit2.png" alt="" width="20px"> &nbsp;Edit</button></li>
+                  <li><button class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#feedbackdelete" title="feedbackdelete"><img src="/static/images/delete.png" alt="" width="20"> &nbsp;Delete</button></li>
+                </ul>
+
+            <a type="button" class="btn" data-bs-toggle="modal" data-bs-target="#feedback" title="Create Account"
+            style="margin-left: 120px; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; background-color:#B10303; color: #f0f0f0;"><strong>seemore</strong></a>
+        </h6>
+          <h6 class="card-subtitle mb-2 text-body-secondary" style="font-size: smaller;"> <img src="/static/images/star.png" alt="" width="15px"><img src="/static/images/star.png" alt="" width="15px"><img src="/static/images/star.png" alt="" width="15px"><img src="/static/images/star.png" alt="" width="15px"></h6>
+         <p style="font-size: smaller;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, facilis quam vitae perferendis numquam quia nam non sunt asperiores corrupti et aliquam necessitatibus quis iusto, dolor neque nostrum molestias officiis!</p>
+        </div>
+      </div>
+
+      <div class="card" style="width: 28rem; margin-right: 30px; background-color: #f0f0f0; border-radius: 15px;">
+        <div class="card-body">
+          <h6 class="card-title"><img src="/static/images/user.png" alt="" width="50px"> <strong>UserName</strong><a type="button" class="btn" data-bs-toggle="modal" data-bs-target="#feedback" title="Create Account"
+            style="margin-left: 170px; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; background-color:#B10303; color: #f0f0f0;"><strong>seemore</strong></a></h6>
+          <h6 class="card-subtitle mb-2 text-body-secondary" style="font-size: smaller;"> <img src="/static/images/star.png" alt="" width="15px"><img src="/static/images/star.png" alt="" width="15px"><img src="/static/images/star.png" alt="" width="15px"><img src="/static/images/star.png" alt="" width="15px"></h6>
+         <p style="font-size: smaller;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, facilis quam vitae perferendis numquam quia nam non sunt asperiores corrupti et aliquam necessitatibus quis iusto, dolor neque nostrum molestias officiis!</p>
+        </div>
+      </div>
+
+      <div class="card" style="width: 28rem; margin-right: 30px; background-color: #f0f0f0; border-radius: 15px;">
+        <div class="card-body">
+          <h6 class="card-title"><img src="/static/images/user.png" alt="" width="50px"> <strong>UserName</strong><a type="button" class="btn" data-bs-toggle="modal" data-bs-target="#feedback" title="Create Account"
+            style="margin-left: 170px; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; background-color:#B10303; color: #f0f0f0;"><strong>seemore</strong></a></h6>
+          <h6 class="card-subtitle mb-2 text-body-secondary" style="font-size: smaller;"> <img src="/static/images/star.png" alt="" width="15px"><img src="/static/images/star.png" alt="" width="15px"><img src="/static/images/star.png" alt="" width="15px"><img src="/static/images/star.png" alt="" width="15px"></h6>
+         <p style="font-size: smaller;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, facilis quam vitae perferendis numquam quia nam non sunt asperiores corrupti et aliquam necessitatibus quis iusto, dolor neque nostrum molestias officiis!</p>
+        </div>
+      </div>
+      
+</div>
+
+<br>
+<div style="display: flex; margin-left: 50px; margin-right: 50px;">
+    <div class="card" style="width: 28rem; margin-right: 30px; background-color: #f0f0f0; border-radius: 15px;">
+        <div class="card-body">
+          <h6 class="card-title"><img src="/static/images/user.png" alt="" width="50px"> <strong>UserName</strong><a type="button" class="btn" data-bs-toggle="modal" data-bs-target="#feedback" title="Create Account"
+            style="margin-left: 170px; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; background-color:#B10303; color: #f0f0f0;"><strong>seemore</strong></a></h6>
+          <h6 class="card-subtitle mb-2 text-body-secondary" style="font-size: smaller;"> <img src="/static/images/star.png" alt="" width="15px"><img src="/static/images/star.png" alt="" width="15px"><img src="/static/images/star.png" alt="" width="15px"><img src="/static/images/star.png" alt="" width="15px"></h6>
+         <p style="font-size: smaller;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, facilis quam vitae perferendis numquam quia nam non sunt asperiores corrupti et aliquam necessitatibus quis iusto, dolor neque nostrum molestias officiis!</p>
+        </div>
+      </div>
+
+      <div class="card" style="width: 28rem; margin-right: 30px; background-color: #f0f0f0; border-radius: 15px;">
+        <div class="card-body">
+          <h6 class="card-title"><img src="/static/images/user.png" alt="" width="50px"> <strong>UserName</strong><a type="button" class="btn" data-bs-toggle="modal" data-bs-target="#feedback" title="Create Account"
+            style="margin-left: 170px; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; background-color:#B10303; color: #f0f0f0;"><strong>seemore</strong></a></h6>
+          <h6 class="card-subtitle mb-2 text-body-secondary" style="font-size: smaller;"> <img src="/static/images/star.png" alt="" width="15px"><img src="/static/images/star.png" alt="" width="15px"><img src="/static/images/star.png" alt="" width="15px"><img src="/static/images/star.png" alt="" width="15px"></h6>
+         <p style="font-size: smaller;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, facilis quam vitae perferendis numquam quia nam non sunt asperiores corrupti et aliquam necessitatibus quis iusto, dolor neque nostrum molestias officiis!</p>
+        </div>
+      </div>
+
+      <div class="card" style="width: 28rem; margin-right: 30px; background-color: #f0f0f0; border-radius: 15px;">
+        <div class="card-body">
+          <h6 class="card-title"><img src="/static/images/user.png" alt="" width="50px"> <strong>UserName</strong><a type="button" class="btn" data-bs-toggle="modal" data-bs-target="#feedback" title="Create Account"
+            style="margin-left: 170px; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; background-color:#B10303; color: #f0f0f0;"><strong>seemore</strong></a></h6>
+          <h6 class="card-subtitle mb-2 text-body-secondary" style="font-size: smaller;"> <img src="/static/images/star.png" alt="" width="15px"><img src="/static/images/star.png" alt="" width="15px"><img src="/static/images/star.png" alt="" width="15px"><img src="/static/images/star.png" alt="" width="15px"></h6>
+         <p style="font-size: smaller;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, facilis quam vitae perferendis numquam quia nam non sunt asperiores corrupti et aliquam necessitatibus quis iusto, dolor neque nostrum molestias officiis!</p>
+        </div>
+      </div>
+      
+</div>
+
+</div>
+
+
+
+  <!-- feedback Modal -->
+  <div class="modal fade" id="feedback" tabindex="-1" aria-labelledby="feedback" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title fs-5" id="feedback"> <h6 class="card-title"><img src="/static/images/user.png" alt="" width="50px"> <strong>UserName</strong></h6></h6>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-body-secondary" style="font-size: smaller;"> <img src="/static/images/star.png" alt="" width="15px"><img src="/static/images/star.png" alt="" width="15px"><img src="/static/images/star.png" alt="" width="15px"><img src="/static/images/star.png" alt="" width="15px"></h6>
+               <p style="font-size: smaller;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, facilis quam vitae perferendis numquam quia nam non sunt asperiores corrupti et aliquam necessitatibus quis iusto, dolor neque nostrum molestias officiis!</p>
+              </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- feedback Edit-->
+  <div class="modal fade" id="feedbackedit" tabindex="-1" aria-labelledby="feedbackedit" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title fs-5" id="feedbackedit"> <h6 class="card-title"><img src="/static/images/user.png" alt="" width="50px"> <strong>UserName</strong></h6></h6>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-body-secondary" style="font-size: smaller;"> <img src="/static/images/star.png" alt="" width="15px"><img src="/static/images/star.png" alt="" width="15px"><img src="/static/images/star.png" alt="" width="15px"><img src="/static/images/star.png" alt="" width="15px"></h6>
+               <p style="font-size: smaller;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, facilis quam vitae perferendis numquam quia nam non sunt asperiores corrupti et aliquam necessitatibus quis iusto, dolor neque nostrum molestias officiis!</p>
+              </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- feedback Delete -->
+  <div class="modal fade" id="feedbackdelete" tabindex="-1" aria-labelledby="feedbackdelete" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered  modal-sm">
+      <div class="modal-content">
+        <div class="modal-body">
+            <div class="card-body">
+                <div class="card-body">
+                    <h5 class="card-title"><strong>Delete Feedback</strong></h5>
+                    <h6 class="card-subtitle mb-2 text-body-secondary" style="font-size: smaller; margin-top: 5px;">Delete feedback permanently</h6>
+                  </div>
+              </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button>
+          </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock body %}
