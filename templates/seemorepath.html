@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %} Home{% endblock title %}
+{% block body %}
+<br>
+<div class="container">
+    <h3><strong>Learning Paths</strong></h3>
+{% for i in range(5) %}
+{% if i%2 == 0 %}
+<div style="display: flex; font-size: smaller;">
+    <div class="col-6"><img src="/static/images/path2.jpg" alt="" style="width: 550px;"></div>
+    <div style="margin-top: 70px;" class="col-6">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione, doloremque nostrum! Velit deleniti debitis officia eveniet atque ab aliquam itaque tempora quam nesciunt quidem dignissimos, praesentium sint laudantium consequuntur. Rerum.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo, ipsum harum veniam minima aperiam voluptatum quidem est facere delectus vero voluptates laborum iste sit eum, eaque nesciunt quae. Placeat, aspernatur!
+    
+    <div style="margin-top: 20px;">
+      <h6><Strong>Pros</Strong></h6>
+      <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit. </li>
+      <li>Repellendus, quod fugiat? Saepe minus quos blanditiis odit,</li> 
+      <li>officiis natus repellendus voluptatum fugit asperiores est </li>
+     <li> perspiciatis excepturi distinctio id sint quidem harum.</li>
+    </div>
+    <div style="margin-top: 20px;">
+      <h6><Strong>Cons</Strong></h6>
+      <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit. </li>
+      <li>Repellendus, quod fugiat? Saepe minus quos blanditiis odit,</li> 
+      <li>officiis natus repellendus voluptatum fugit asperiores est </li>
+     <li> perspiciatis excepturi distinctio id sint quidem harum.</li>
+    </div>  
+    </div>
+ </div><hr>
+ {% else %}
+ <div style="display: flex; font-size: smaller;">
+    <div style="margin-top: 70px; text-align: right;" class="col-6" >Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione, doloremque nostrum! Velit deleniti debitis officia eveniet atque ab aliquam itaque tempora quam nesciunt quidem dignissimos, praesentium sint laudantium consequuntur. Rerum.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo, ipsum harum veniam minima aperiam voluptatum quidem est facere delectus vero voluptates laborum iste sit eum, eaque nesciunt quae. Placeat, aspernatur!
+    
+    <div style="margin-top: 20px;">
+      <h6><Strong>Pros</Strong></h6>
+      <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit. </li>
+      <li>Repellendus, quod fugiat? Saepe minus quos blanditiis odit,</li> 
+      <li>officiis natus repellendus voluptatum fugit asperiores est </li>
+     <li> perspiciatis excepturi distinctio id sint quidem harum.</li>
+    </div>
+    <div style="margin-top: 20px; ">
+      <h6><Strong>Cons</Strong></h6>
+      <li>Lorem ipsum, dolor sit amet consectetur adipisicing elit. </li>
+      <li>Repellendus, quod fugiat? Saepe minus quos blanditiis odit,</li> 
+      <li>officiis natus repellendus voluptatum fugit asperiores est </li>
+     <li> perspiciatis excepturi distinctio id sint quidem harum.</li>
+    </div> 
+    </div>
+    <div class="col-6"><img src="/static/images/path2.jpg" alt="" style="width: 550px;"></div> 
+ </div><hr>
+ {% endif %}
+ {% endfor %}
+</div>
+{% endblock body %}

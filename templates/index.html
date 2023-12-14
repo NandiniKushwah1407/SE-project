@@ -26,14 +26,31 @@
       </div>
     </nav>
     <br>
+    <div class="col-10" style="margin-left: 100px;">
+    <div>
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <small>{{message}}</small>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
+    </div>
+  </div>
     <div class="container" style="display: flex;">
       <div class="col-6">
         <br><br>
         <img src="/static/images/1.jpg" alt="" style="width: 500px;">
       </div>
       <div class="col-4" style="margin-left: 80px; ">
-        <br> <br> <br>
-        <h3><strong>SignUp</strong></h3> <br>
+        <br> <br>
+        <div class="alert alert-warning" role="alert">
+          <small>Only IITM BS student can Signup with the student's Mail!!</small>
+        </div> 
+        <h3><strong>SignUp</strong></h3><br>
           <form action="/" method="POST">
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Email address</label>
