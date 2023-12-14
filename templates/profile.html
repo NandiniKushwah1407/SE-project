@@ -1,0 +1,558 @@
+{% extends 'base.html' %}
+{% block title %} Home{% endblock title %}
+{% block body %}
+
+<br>
+<div style="margin-left: 30px; margin-right: 30px; display: flex;">
+
+  <div
+    style=" border-radius: 12px;  background-color: #f0f0f0; padding: 10px; width: 380px; padding-left: 1%; text-align: center;"
+    class="col-4">
+    <div style="text-align: center; margin-top: 15px;">
+      <h3><Strong>Students's Dashboard</Strong></h3>
+    </div>
+    <hr>
+    <div style="margin-top: 25px; margin-bottom: 25px; display: flex; text-align: left; align-items: center;">
+      {% if image_data %} &nbsp; &nbsp; &nbsp;
+      <form method="POST" action="/updateprofile" enctype="multipart/form-data" id="profile-picture-form">
+        <label for="profile-picture-input">
+          <div style="width: 100px; height: 100px; margin-left: 20px; border-radius: 50%; overflow: hidden; margin: auto; display: block;">
+            <img src="data:image/jpeg;base64,{{ image_data }}" alt="Profile Picture" style="width: 100%; height: auto; display: block;">
+        </div>
+        </label>
+        <input type="file" name="profile_picture" id="profile-picture-input" accept="image/*" style="display: none;"
+          onchange="document.getElementById('profile-picture-form').submit()">
+      </form> &nbsp; &nbsp; &nbsp;
+      {% else %}  
+      <form method="POST" action="/updateprofile" enctype="multipart/form-data" id="profile-picture-form">
+        <label for="profile-picture-input">
+          <img src="/static/images/user.png" alt="Profile Picture"
+            style="width: 100px; height: 100px; margin-left: 20px; cursor: pointer;">
+        </label>
+        <input type="file" name="profile_picture" id="profile-picture-input" accept="image/*" style="display: none;"
+          onchange="document.getElementById('profile-picture-form').submit()">
+      </form>
+      &nbsp; &nbsp; &nbsp; {% endif %}<div>
+        <h3>{{user.UserName}}</h3>
+        <h5>{{userdetails.Name}}</h5> <small>{{userdetails.Level}} Level</small>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: block;">
+
+      <div style="margin-left: 50px;">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <small>{{message}}</small>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+      </div>
+
+    <div style="background-color: #f0f0f0; border-radius: 15px; height: 200px; width: 1000px; margin-left: 50px;">
+
+    </div>
+
+    <div style="display: flex;">
+      <div style="margin-left: 80px; margin-top: 20px;" class="col-3">
+        <h4><strong>Future Goals</strong> &nbsp; <a type="button" data-bs-toggle="modal" data-bs-target="#FutureGoal"
+            title="FutureGoal">
+            <img style="width: 25px; margin-left: 50px;" src="/static/images/add.png" alt="">
+          </a></h4><br>
+          
+            {% if futuregoal|length ==0 %}
+            <div class="alert alert-secondary" role="alert">
+              <small>No Goals Found!!</small>
+            </div>
+            {% endif %}
+             
+
+        {% for f in futuregoal %}
+        <div
+          style="width: 250px; height: 50px; padding-right: 10px; padding-left: 10px; margin-right: 10px; border-radius: 10px; background-color: #ffdd47; display: flex; align-items: center;">
+          <div class="col-8"><small>{{f.courses.CourseName}}</small></div>
+          <div class="col-2"></div>
+          <div class="col-2"> <a class="dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="/static/images/more.png" alt="" width="25">
+            </a>
+            <ul class="dropdown-menu">
+              <li><button class="dropdown-item" href="#" data-bs-toggle="modal"
+                  data-bs-target="#goaldetail{{f.FutureGoalID}}" title="information "> <img
+                    src="/static/images/info.png" alt="" width="20px"> &nbsp;Info</button></li>
+              <li><button class="dropdown-item" href="#" data-bs-toggle="modal"
+                  data-bs-target="#goaldelete{{f.FutureGoalID}}" title="delete goal"><img
+                    src="/static/images/delete.png" alt="" width="20"> &nbsp;Delete</button></li>
+            </ul>
+          </div>
+
+
+          <!-- Goals Details-->
+          <div class="modal fade" id="goaldetail{{f.FutureGoalID}}" tabindex="-1"
+            aria-labelledby="goaldetail{{f.FutureGoalID}}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h6 class="modal-title fs-5" id="feedbackedit">
+                    <h5 class="card-title"> <strong>{{f.courses.CourseName}}</strong> &nbsp;<a
+                        href="{{f.courses.Courselink}}" target="_blank"><img src="/static/images/share (1).png" alt=""
+                          style="width: 20px;"></a>
+                    </h5>
+                  </h6>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-body-secondary" style="font-size: smaller;">
+                      <strong>Rating:</strong>{% for r in range(f.courses.CourseRating) %} <img
+                        src="/static/images/star.png" alt="" width="15px"> {% endfor %}
+                    </h6>
+                    <p style="font-size: smaller;">{{f.courses.CourseDescription}}</p>
+                    <div style="color: gray; font-size: smaller;">
+                      <strong> by {{f.courses.CourseProfessor}} </strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Goal Delete -->
+          <div class="modal fade" id="goaldelete{{f.FutureGoalID}}" tabindex="-1"
+            aria-labelledby="goaldelete{{f.FutureGoalID}}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered  modal-sm">
+              <div class="modal-content">
+                <div class="modal-body">
+                  <div class="card-body">
+                    <div class="card-body">
+                      <h5 class="card-title"><strong>Delete Goal</strong></h5>
+                      <h6 class="card-subtitle mb-2 text-body-secondary" style="font-size: smaller; margin-top: 5px;">
+                        Delete
+                        Goal permanently</h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                  <a type="button" class="btn btn-sm btn-outline-secondary"
+                    href="/deletegoal/{{f.FutureGoalID}}">Delete</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div><br>{% endfor %}
+      </div>
+
+
+      <div style="margin-left: 80px; margin-top: 20px;" class="col-3">
+        <h4><strong>Past Performance</strong>&nbsp;<a type="button" data-bs-toggle="modal" data-bs-target="#PastCourse"
+            title="PastCourse">
+            <img style="width: 25px; margin-left: 5px;" src="/static/images/add.png" alt="">
+          </a></h4><br>
+
+          {% if pastcourse|length ==0 %}
+          <div class="alert alert-secondary" role="alert">
+            <small>No Performance Found!!</small>
+          </div>
+          {% endif %}
+        {% for p in pastcourse %}
+        <div
+          style="width: 250px; height: 50px; padding-right: 10px; padding-left: 10px; margin-right: 10px; border-radius: 10px; background-color: #ffdd47; display: flex; align-items: center;">
+          <div class="col-8"> <small>{{p.courses.CourseName}} </small></div>
+          <div class="col-2"></div>
+          <div class="col-2"> <a class="dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="/static/images/more.png" alt="" width="25">
+            </a>
+            <ul class="dropdown-menu">
+              <li><button class="dropdown-item" href="#" data-bs-toggle="modal"
+                  data-bs-target="#pastcourseinfo{{p.PastCourseID}}" title="pastcourse info"> <img
+                    src="/static/images/info.png" alt="" width="20px"> &nbsp;Info</button></li>
+              <li><button class="dropdown-item" href="#" data-bs-toggle="modal"
+                  data-bs-target="#pastcourseedit{{p.PastCourseID}}" title="pastcourseedit"> <img
+                    src="/static/images/edit2.png" alt="" width="20px"> &nbsp;Edit</button></li>
+              <li><button class="dropdown-item" href="#" data-bs-toggle="modal"
+                  data-bs-target="#pastcoursedelete{{p.PastCourseID}}" title="pastcoursedelete"><img
+                    src="/static/images/delete.png" alt="" width="20"> &nbsp;Delete</button></li>
+            </ul>
+          </div>
+
+          <!--Past course info-->
+          <div class="modal fade" id="pastcourseinfo{{p.PastCourseID}}" tabindex="-1"
+            aria-labelledby="pastcourseinfo{{p.PastCourseID}}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h6 class="modal-title fs-5" id="pastcourseinfo">
+                    <div>
+                      <h5 class="card-title"> <strong>{{p.courses.CourseName}}</strong> &nbsp;<a
+                          href="{{p.courses.Courselink}}" target="_blank"><img src="/static/images/share (1).png" alt=""
+                            style="width: 20px;"></a><br>
+                      </h5>
+                    </div>
+                    <div style="color: gray; font-size: small;">
+                      <strong> by {{p.courses.CourseProfessor}} </strong>
+                    </div>
+                  </h6>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="card-body">
+                    <div>
+                      <h5>Completed</h5>
+                    </div>
+                    <div class="card-subtitle mb-2 text-body-secondary">
+                      <div><strong>CGPA:</strong> &nbsp; &nbsp; {{p.CGPA}} </div>
+                      <div><strong>Completion Term:</strong> &nbsp; &nbsp; {{p.CompletionTerm}} </div>
+                    </div>
+                    {% if p.feedback %}
+                    <h6 class="card-subtitle mb-2 text-body-secondary"><strong>Rating:</strong>{% for r in
+                      range(p.feedback.Ratings) %} <img src="/static/images/star.png" alt="" width="15px"> {% endfor %}
+                    </h6>
+                    <p style="font-size: smaller;">{{p.feedback.Feedback}}</p>
+                    {% else %}
+                    <a href="/feedbackpage/{{p.courses.CourseID}}"
+                      style="text-decoration: none; color: #B10303;"><strong>Oops.. Add Your Feedback Now</strong></a>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pastcourse Edit -->
+          <div class="modal fade" id="pastcourseedit{{p.PastCourseID}}" tabindex="-1"
+            aria-labelledby="pastcourseedit{{p.PastCourseID}}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h6 class="modal-title fs-5" id="feedbackedit">
+                    <h4 class="card-title"><strong>Update Your Performance</strong>
+                    </h4>
+                  </h6>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="card-body">
+                    <div>
+                      <h5 class="card-title"> <strong>{{p.courses.CourseName}}</strong> &nbsp;<a
+                          href="{{p.courses.Courselink}}" target="_blank"><img src="/static/images/share (1).png" alt=""
+                            style="width: 20px;"></a><br>
+                      </h5>
+                    </div>
+                    <hr>
+                    <form action="/updatepastcourse/{{p.PastCourseID}}" method="POST">
+                      <div class="mb-3 row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">Term</label>
+                        <div class="col-sm-10">
+                          <div class="form-floating">
+                            <select class="form-select" aria-label="Default select example" name="term">
+                              <option selected>{{p.CompletionTerm}}</option>
+                              {% for t in Terms %}
+                              <option value="{{t}}">{{t}}</option>
+                              {% endfor %}
+                            </select>
+                            <label for="floatingSelect">Currently selected {{p.CompletionTerm}}</label>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="mb-3 row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">CGPA</label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" id="inputPassword" name="cgpa" value="{{p.CGPA}}">
+                        </div>
+                      </div>
+                      <button type="submit" class="btn btn-danger"><strong>Update</strong></button>
+
+                    </form>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Past Course Delete -->
+          <div class="modal fade" id="pastcoursedelete{{p.PastCourseID}}" tabindex="-1"
+            aria-labelledby="pastcoursedelete{{p.PastCourseID}}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered  modal-sm">
+              <div class="modal-content">
+                <div class="modal-body">
+                  <div class="card-body">
+                    <div class="card-body">
+                      <h5 class="card-title"><strong>Delete {{p.courses.CourseName}}</strong></h5>
+                      <h6 class="card-subtitle mb-2 text-body-secondary" style="font-size: smaller; margin-top: 5px;">
+                        Delete
+                        your Performance permanently</h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                  <a type="button" class="btn btn-sm btn-outline-secondary"
+                    href="/deletepastcourse/{{p.PastCourseID}}">Delete</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div><br>{% endfor %}
+      </div>
+
+
+      <div style="margin-left: 80px; margin-top: 20px;" class="col-3">
+        <h4><strong>Your Interests</strong>&nbsp;<a type="button" data-bs-toggle="modal"
+            data-bs-target="#CourseInterest" title="CourseInterest">
+            <img style="width: 25px; margin-left: 50px;" src="/static/images/add.png" alt="">
+          </a></h4><br>
+
+          {% if courseinterest|length ==0 %}
+          <div class="alert alert-secondary" role="alert">
+            <small>No Interest Found!!</small>
+          </div>
+          {% endif %}
+        {% for i in courseinterest %}
+        <div
+          style="width: 250px; height: 50px; padding-right: 10px; padding-left: 10px; margin-right: 10px; border-radius: 10px; background-color: #ffdd47; display: flex; align-items: center;">
+          <div class="col-8"><small>{{i.courses.CourseName}}</small> </div>
+          <div class="col-2"></div>
+          <div class="col-2"> <a class="dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="/static/images/more.png" alt="" width="25">
+            </a>
+            <ul class="dropdown-menu">
+              <li><button class="dropdown-item" href="#" data-bs-toggle="modal"
+                  data-bs-target="#interestinfo{{i.courses.CourseID}}" title="interestinfo"> <img
+                    src="/static/images/info.png" alt="" width="20px"> &nbsp;Info</button></li>
+              <li><button class="dropdown-item" href="#" data-bs-toggle="modal"
+                  data-bs-target="#interestdelete{{i.courses.CourseID}}" title="interestdelete"><img
+                    src="/static/images/delete.png" alt="" width="20"> &nbsp;Delete</button></li>
+            </ul>
+          </div>
+          <!-- Interest Info-->
+          <div class="modal fade" id="interestinfo{{i.courses.CourseID}}" tabindex="-1"
+            aria-labelledby="interestinfo{{i.courses.CourseID}}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h6 class="modal-title fs-5" id="feedbackedit">
+                    <h5 class="card-title"> <strong>{{i.courses.CourseName}}</strong> &nbsp;<a
+                        href="{{i.courses.Courselink}}" target="_blank"><img src="/static/images/share (1).png" alt=""
+                          style="width: 20px;"></a>
+                    </h5>
+                  </h6>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-body-secondary" style="font-size: smaller;">
+                      <strong>Rating:</strong>{% for r in range(i.courses.CourseRating) %} <img
+                        src="/static/images/star.png" alt="" width="15px"> {% endfor %}
+                    </h6>
+                    <p style="font-size: smaller;">{{i.courses.CourseDescription}}</p>
+                    <div style="color: gray; font-size: smaller;">
+                      <strong> by {{i.courses.CourseProfessor}} </strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interest Delete -->
+          <div class="modal fade" id="interestdelete{{i.courses.CourseID}}" tabindex="-1"
+            aria-labelledby="interestdelete{{i.courses.CourseID}}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered  modal-sm">
+              <div class="modal-content">
+                <div class="modal-body">
+                  <div class="card-body">
+                    <div class="card-body">
+                      <h5 class="card-title"><strong>Delete Your Course Interest</strong></h5>
+                      <h6 class="card-subtitle mb-2 text-body-secondary" style="font-size: smaller; margin-top: 5px;">
+                        Delete
+                        intrest permanently</h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                  <a type="button" class="btn btn-sm btn-outline-secondary"
+                    href="/deleteinterest/{{i.CourseInterestID}}">Delete</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><br>{% endfor %}
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+<!-- past course Modal -->
+<div class="modal fade" id="PastCourse" tabindex="-1" aria-labelledby="PastCourse" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="PastCourseLabel"><strong>Past Courses</strong></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/pastcourse" method="POST">
+
+          <div class="mb-3 row">
+            <label for="inputPassword" class="col-sm-2 col-form-label">Course</label>
+            <div class="col-sm-10">
+              <select class="form-select" aria-label="Default select example" name="course" required>
+                <option selected>Select the course</option>
+                {% for c in courses %}
+                <option value="{{c.CourseID}}">{{c.CourseName}}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+
+          <div class="mb-3 row">
+            <label for="inputPassword" class="col-sm-2 col-form-label">Term</label>
+            <div class="col-sm-10">
+              <select class="form-select" aria-label="Default select example" name="term" required>
+                <option selected>Select the term</option>
+                {% for t in Terms %}
+                <option value="{{t}}">{{t}}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+
+          <div class="mb-3 row">
+            <label for="inputPassword" class="col-sm-2 col-form-label">CGPA</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="inputPassword" name="cgpa" required>
+            </div>
+          </div>
+
+          <div class="mb-3 row">
+            <label for="inputPassword" class="col-sm-2 col-form-label">Feedback</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="inputPassword" name="feedback">
+            </div>
+          </div>
+
+
+          <div class="mb-3 row">
+            <label for="inputPassword" class="col-sm-2 col-form-label" for="inputPassword"
+              class="col-sm-2 col-form-label"> Rate </label>
+            <div class="col-sm-10">
+              <div style="display: flex;">
+                <div class="star">
+                  <input type="radio" id="five" name="rate" value="5">
+                  <label for="five"></label>
+                  <input type="radio" id="four" name="rate" value="4">
+                  <label for="four"></label>
+                  <input type="radio" id="three" name="rate" value="3">
+                  <label for="three"></label>
+                  <input type="radio" id="two" name="rate" value="2">
+                  <label for="two"></label>
+                  <input type="radio" id="one" name="rate" value="1">
+                  <label for="one"></label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-danger"><strong>Add</strong></button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--course intrest Modal -->
+<div class="modal fade" id="CourseInterest" tabindex="-1" aria-labelledby="CourseInterest" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="CourseInterestLabel"><strong>Courses Interest</strong></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/courseinterest" method="POST">
+
+          <div class="mb-3 row">
+            <label for="inputPassword" class="col-sm-2 col-form-label">Course</label>
+            <div class="col-sm-10">
+              <select class="form-select" aria-label="Default select example" name="course" required>
+                <option selected>Select the course</option>
+                {% for c in courses %}
+                <option value="{{c.CourseID}}">{{c.CourseName}} </option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-danger"><strong>Add</strong></button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Future goal Modal -->
+<div class="modal fade" id="FutureGoal" tabindex="-1" aria-labelledby="FutureGoal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="FutureGoalLabel"><strong>Future Goals</strong></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/futuregoal" method="POST">
+
+          <div class="mb-3 row">
+            <label for="inputPassword" class="col-sm-2 col-form-label">Course</label>
+            <div class="col-sm-10">
+              <select class="form-select" aria-label="Default select example" name="course" required>
+                <option selected>Select the course</option>
+                {% for c in courses %}
+                <option value="{{c.CourseID}}">{{c.CourseName}} </option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+
+          <div class="mb-3 row">
+            <label for="inputPassword" class="col-sm-2 col-form-label">Term</label>
+            <div class="col-sm-10">
+              <select class="form-select" aria-label="Default select example" name="term" required>
+                <option selected>Select the term</option>
+                {% for t in Terms %}
+                <option value="{{t}}">{{t}} </option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+
+          <div class="mb-3 row">
+            <label for="inputPassword" class="col-sm-2 col-form-label">Comment</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="inputPassword" name="comment">
+            </div>
+          </div>
+
+
+          <button type="submit" class="btn btn-danger"><strong>Add</strong></button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock body %}
