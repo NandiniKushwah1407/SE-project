@@ -5,39 +5,19 @@
 <br>
 <div style="margin-left: 30px; margin-right: 30px; display: flex;">
 
-  <div
-    style=" border-radius: 12px;  background-color: #f0f0f0; padding: 10px; width: 380px; padding-left: 1%; text-align: center;"
-    class="col-4">
-    <div style="text-align: center; margin-top: 15px;">
-      <h3><Strong>Students's Dashboard</Strong></h3>
+  <div style=" border-radius: 12px;  background-color: #f0f0f0; padding: 10px; width: 380px; padding-left: 1%;">
+    <div style="text-align: center;"><h4><Strong>Recommended Courses</Strong></h4></div><hr>
+    {% for course in courses[:4] %}
+    <div><strong>{{course.CourseName}} </strong> &nbsp;<a href="{{course.Courselink}}" target="_blank"><img src="/static/images/share (1).png" alt="" style="width: 20px;"></a>
+    <div style="margin-top: 10px; margin-bottom: 10px; font-size: smaller;">
+        {{course.CourseDescription}}
     </div>
-    <hr>
-    <div style="margin-top: 25px; margin-bottom: 25px; display: flex; text-align: left; align-items: center;">
-      {% if image_data %} &nbsp; &nbsp; &nbsp;
-      <form method="POST" action="/updateprofile" enctype="multipart/form-data" id="profile-picture-form">
-        <label for="profile-picture-input">
-          <div style="width: 100px; height: 100px; margin-left: 20px; border-radius: 50%; overflow: hidden; margin: auto; display: block;">
-            <img src="data:image/jpeg;base64,{{ image_data }}" alt="Profile Picture" style="width: 100%; height: auto; display: block;">
-        </div>
-        </label>
-        <input type="file" name="profile_picture" id="profile-picture-input" accept="image/*" style="display: none;"
-          onchange="document.getElementById('profile-picture-form').submit()">
-      </form> &nbsp; &nbsp; &nbsp;
-      {% else %}  
-      <form method="POST" action="/updateprofile" enctype="multipart/form-data" id="profile-picture-form">
-        <label for="profile-picture-input">
-          <img src="/static/images/user.png" alt="Profile Picture"
-            style="width: 100px; height: 100px; margin-left: 20px; cursor: pointer;">
-        </label>
-        <input type="file" name="profile_picture" id="profile-picture-input" accept="image/*" style="display: none;"
-          onchange="document.getElementById('profile-picture-form').submit()">
-      </form>
-      &nbsp; &nbsp; &nbsp; {% endif %}<div>
-        <h3>{{user.UserName}}</h3>
-        <h5>{{userdetails.Name}}</h5> <small>{{userdetails.Level}} Level</small>
-      </div>
-    </div>
-  </div>
+<div style="color: gray; font-size: smaller;">
+   <strong> by {{course.CourseProfessor}} </strong>
+</div></div><hr>
+{% endfor %}
+
+</div>
 
   <div style="display: block;">
 
@@ -54,7 +34,45 @@
         {% endwith %}
       </div>
 
-    <div style="background-color: #f0f0f0; border-radius: 15px; height: 200px; width: 1000px; margin-left: 50px;">
+    <div style="background-color: #f0f0f0; border-radius: 15px; height: 210px; width: 1000px; margin-left: 50px; padding: 10px;">
+      <div style="text-align: center;">
+        <h4><Strong>Students's Dashboard</Strong></h4>
+      </div>
+      <hr>
+      <div style="margin-top: 10px; margin-bottom: 25px; display: flex; text-align: left; align-items: center;">
+        {% if image_data %} &nbsp; &nbsp; &nbsp;
+        <div class="col-1">
+          <form method="POST" action="/updateprofile" enctype="multipart/form-data" id="profile-picture-form">
+            <label for="profile-picture-input">
+              <div style="width: 100px; height: 100px; margin-left: 20px; border-radius: 50%; overflow: hidden; margin: auto; display: block;">
+                <img src="data:image/jpeg;base64,{{ image_data }}" alt="Profile Picture" style="width: 100%; height: auto; display: block;">
+            </div>
+            </label>
+            <input type="file" name="profile_picture" id="profile-picture-input" accept="image/*" style="display: none;"
+              onchange="document.getElementById('profile-picture-form').submit()">
+          </form> 
+        </div>&nbsp; &nbsp; &nbsp;
+        {% else %}  
+        <div class="col-1">
+          <form method="POST" action="/updateprofile" enctype="multipart/form-data" id="profile-picture-form">
+            <label for="profile-picture-input">
+              <img src="/static/images/user.png" alt="Profile Picture"
+                style="width: 100px; height: 100px; margin-left: 20px; cursor: pointer;">
+            </label>
+            <input type="file" name="profile_picture" id="profile-picture-input" accept="image/*" style="display: none;"
+              onchange="document.getElementById('profile-picture-form').submit()">
+          </form>
+        </div>
+        &nbsp; &nbsp; &nbsp; {% endif %}
+        <div class="col-1 mx-4"> 
+          <h3>{{user.UserName}}</h3>
+          <h5>{{userdetails.Name}}</h5> <small>{{userdetails.Level}} Level</small>
+        </div>
+        <div style="margin-left: 10px; margin-right: 10px; text-align: justify; font-style: italic;" class="col-9">
+          <h6>About</h6>
+          <p><small>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laudantium iste exercitationem repellendus commodi, aut pariatur! Enim ratione odit voluptates incidunt laborum temporibus rem suscipit, dolore expedita modi fugit dolor inventore nemo voluptate animi blanditiis eaque? </small></p>
+        </div>
+      </div>
 
     </div>
 
